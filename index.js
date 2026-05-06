@@ -46,7 +46,21 @@ app.delete('/contactos/:id',async function(req, res){
     res.json({mensaje:'Contacto eliminado'})
 })
 app.put('/contactos/:id',async function(req, res){
-
+    const id = req.params.id
+    const indice = contactos.findIndex(c=>c.id === Number(id))
+    if(indice === -1){
+        res.status(404).json({error:'Contacto no encontrado'})
+    }else{
+        
+        const actContacto = {
+                id: req.body.id,
+                nombre: req.body.nombre,
+                email: req.body.email,
+                telefono: req.body.telefono,
+            }
+    }
+    contactos.put(actContacto)
+    res.status(200).json({mensaje:'Contacto actualizado'})
 })
 app.listen(3000,function(){
     console.log('Servidor corriendo en http://localhost:3000')
