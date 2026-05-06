@@ -36,7 +36,14 @@ app.post('/contactos',async function(req, res){
     }
 })
 app.delete('/contactos/:id',async function(req, res){
-
+    const id = req.params.id
+    const indice = contactos.findIndex(c=>c.id === Number(id))
+    if(indice === -1){
+        res.status(404).json({error:'Contacto no encontrado'})
+        return
+    }
+    contactos.splice(indice, 1)
+    res.json({mensaje:'Contacto eliminado'})
 })
 app.put('/contactos/:id',async function(req, res){
 
