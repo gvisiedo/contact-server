@@ -12,12 +12,13 @@ app.get('/contactos',async function(req, res){
 })
 app.get('/contactos/:id',async function(req, res){
     const id = req.params.id //lee id 
-    const contactos = contactos.find(c => c.id === Number(id)) //busca el id
+    const contacto = contacto.find(c => c.id === Number(id)) //busca el id
 
-    if(!contactos){
+    if(!contacto){
         res.status(404).json({error: 'Contacto no econtrado'})
         return
     }
+    res.json(contacto)
 })
 app.post('/contactos',async function(req, res){
     const email = req.body.email
@@ -29,7 +30,7 @@ app.post('/contactos',async function(req, res){
             id: contactos.length+1,
             nombre: nombre,
             email: email,
-            telefono: telefono,
+            telefono: req.body.telefono,
         }
         contactos.push(nuevoContacto)
         res.json(nuevoContacto)
@@ -53,13 +54,13 @@ app.put('/contactos/:id',async function(req, res){
     }else{
         
         const actContacto = {
-                id: req.body.id,
+                id: contactos[indice],
                 nombre: req.body.nombre,
                 email: req.body.email,
                 telefono: req.body.telefono,
             }
+            contactos[indice]=actContacto
     }
-    contactos.put(actContacto)
     res.status(200).json({mensaje:'Contacto actualizado'})
 })
 app.listen(3000,function(){
