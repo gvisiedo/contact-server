@@ -14,13 +14,26 @@ app.get('/contactos/:id',async function(req, res){
     const id = req.params.id //lee id 
     const contactos = contactos.find(c => c.id === Number(id)) //busca el id
 
-    if(!contactos0){
+    if(!contactos){
         res.status(404).json({error: 'Contacto no econtrado'})
         return
     }
 })
 app.post('/contactos',async function(req, res){
-
+    const email = req.body.email
+    const nombre = req.body.nombre
+    if(!email || !nombre){
+        res.json('El email y el nombre son obligatorios')
+    }else{
+        const nuevoContacto = {
+            id: contactos.length+1,
+            nombre: nombre,
+            email: email,
+            telefono: telefono,
+        }
+        contactos.push(nuevoContacto)
+        res.json(nuevoContacto)
+    }
 })
 app.delete('/contactos/:id',async function(req, res){
 
