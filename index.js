@@ -12,7 +12,7 @@ app.get('/contactos',async function(req, res){
 })
 app.get('/contactos/:id',async function(req, res){
     const id = req.params.id //lee id 
-    const contacto = contacto.find(c => c.id === Number(id)) //busca el id
+    const contacto = contactos.find(c => c.id === Number(id)) //busca el id
 
     if(!contacto){
         res.status(404).json({error: 'Contacto no econtrado'})
@@ -54,7 +54,7 @@ app.put('/contactos/:id',async function(req, res){
     }else{
         
         const actContacto = {
-                id: contactos[indice],
+                id: contactos[indice].id,
                 nombre: req.body.nombre,
                 email: req.body.email,
                 telefono: req.body.telefono,
